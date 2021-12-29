@@ -20,6 +20,7 @@ module.exports = {
       printWidth: 80, //글자길이
       bracketSpacing: true,
       arrowParens: 'avoid',
+      endOfLine: 'auto',
     }] //'off',warn error 등의 경고 레벨이 존재
   },
   overrides: [
