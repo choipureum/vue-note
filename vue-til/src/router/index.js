@@ -27,7 +27,7 @@ const routes = [
 ];
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL), //# 제거
+	history: createWebHistory(process.env.BASE_URL), //# 제거 필수 default 값
 	routes,
 });
 
