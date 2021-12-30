@@ -21,6 +21,11 @@ const routes = [
 			import(/* webpackChunkName: "about" */ '@/views/SignupPage.vue'),
 	},
 	{
+		path: '/main',
+		name: 'main',
+		component: () => import('@/views/MainPage.vue'),
+	},
+	{
 		path: '/:catchAll(.*)', // Unrecognized path automatically matches 404
 		component: () => import('@/views/error/404.vue'),
 	},
