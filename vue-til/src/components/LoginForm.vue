@@ -26,7 +26,6 @@
 
 <script>
 import PageHeader from '@/components/common/PageHeader.vue';
-import { loginUser } from '@/api/index';
 import { validateEmail } from '@/utils/validation';
 
 export default {
@@ -53,10 +52,7 @@ export default {
 	methods: {
 		async submitForm() {
 			try {
-				const { data } = await loginUser(this.user);
-				// this.logMessage = `${data.user.nickname}님 환영합니다!`;
-				console.log(data);
-				this.$store.commit('setUser', data.user);
+				await this.$store.dispatch('LOGIN', this.user); //actions level 부를수있음 -> 리팩토링해서 actions로 이동 (await 필수)
 				//router 링크 to 로 이동 //param이나 query도 넘길수있음
 				this.$router.push('/main');
 			} catch ({ response }) {

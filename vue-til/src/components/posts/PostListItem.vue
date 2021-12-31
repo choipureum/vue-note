@@ -1,47 +1,19 @@
 <template>
-	<div>
-		<div class="main list-container contents">
-			<h1 class="page-header">Today I Learned Vue</h1>
-			<div v-if="isLoading">
-				<loading-spinner></loading-spinner>
-			</div>
-			<ul v-else>
-				<post-list-item
-					v-for="postItem in postItems"
-					:key="postItem._id"
-					:postItem="postItem"
-				></post-list-item>
-			</ul>
-		</div>
-	</div>
+	<li>
+		<div class="post-title">{{ postItem.title }}</div>
+		<div class="post-contents">{{ postItem.contents }}</div>
+		<div class="post-time">{{ postItem.createdAt }}</div>
+	</li>
 </template>
 
 <script>
-import { fetchPosts } from '@/api/index';
-import PostListItem from '@/components/posts/PostListItem.vue';
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
-
 export default {
-	components: {
-		PostListItem,
-		LoadingSpinner,
-	},
-	data() {
-		return {
-			postItems: [],
-			isLoading: false,
-		};
-	},
-	methods: {
-		async fetchNote() {
-			this.isLoading = true;
-			const { data } = await fetchPosts();
-			this.isLoading = false;
-			this.postItems = data.posts;
+	//props는 최대한 자세히 정의할것
+	props: {
+		postItem: {
+			type: Object,
+			required: true,
 		},
-	},
-	created() {
-		this.fetchNote();
 	},
 };
 </script>
