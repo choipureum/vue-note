@@ -1,6 +1,6 @@
 <template>
 	<div class="contents">
-		<h1 class="page-header">Crate Post</h1>
+		<h1 class="page-header">Edit Post</h1>
 		<div class="form-wrapper">
 			<form class="form" @submit.prevent="submitForm">
 				<div>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { createPost } from '@/api/posts';
+import { fetchPost, editPost } from '@/api/posts';
 
 export default {
 	data() {
@@ -40,7 +40,7 @@ export default {
 	methods: {
 		async submitForm() {
 			try {
-				const { data } = await createPost({
+				const { data } = await editPost(this.$route.params.id, {
 					title: this.title,
 					contents: this.contents,
 				});
@@ -50,6 +50,12 @@ export default {
 				this.logMessage = error.response.data.message;
 			}
 		},
+	},
+	async created() {
+		const { data } = await fetchPost(this.$route.params.id);
+		this.title = data.title;
+		this.contents = data.contents;
+		console.log(data);
 	},
 };
 </script>

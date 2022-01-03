@@ -2,17 +2,35 @@
 	<li>
 		<div class="post-title">{{ postItem.title }}</div>
 		<div class="post-contents">{{ postItem.contents }}</div>
-		<div class="post-time">{{ postItem.createdAt }}</div>
+		<div class="post-time">
+			{{ $filters.formatDate(postItem.createdAt) }}
+			<i class="icon ion-md-create" @click="routeEditPage"></i>
+			<i class="icon ion-md-trash" @click="deleteItem"></i>
+		</div>
 	</li>
 </template>
 
 <script>
+import { deletePost } from '@/api/posts';
+
 export default {
 	//props는 최대한 자세히 정의할것
 	props: {
 		postItem: {
 			type: Object,
 			required: true,
+		},
+	},
+	methods: {
+		async deleteItem() {
+			if (confirm('Do you want delete it?')) {
+				const { data } = await deletePost(this.postItem._id);
+				this.$emit('refresh');
+				console.log(data);
+			}
+		},
+		routeEditPage() {
+			this.$router.push(`/posts/${this.postItem._id}`);
 		},
 	},
 };

@@ -51,7 +51,7 @@
 
 <script>
 import PageHeader from '@/components/common/PageHeader.vue';
-import { signupUser } from '@/api/index';
+import { signupUser } from '@/api/auth';
 import { validateEmail, validatePassword } from '@/utils/validation';
 
 export default {
