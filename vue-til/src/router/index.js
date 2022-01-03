@@ -26,6 +26,11 @@ const routes = [
 		component: () => import('@/views/MainPage.vue'),
 	},
 	{
+		path: '/add',
+		name: 'add',
+		component: () => import('@/views/post/PostAddPage.vue'),
+	},
+	{
 		path: '/:catchAll(.*)', // Unrecognized path automatically matches 404
 		component: () => import('@/views/error/404.vue'),
 	},
