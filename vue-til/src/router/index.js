@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store';
 
 const routes = [
 	{
@@ -23,16 +24,25 @@ const routes = [
 	{
 		path: '/main',
 		name: 'main',
+		meta: {
+			auth: true,
+		},
 		component: () => import('@/views/MainPage.vue'),
 	},
 	{
 		path: '/add',
 		name: 'add',
+		meta: {
+			auth: true,
+		},
 		component: () => import('@/views/post/PostAddPage.vue'),
 	},
 	{
 		path: '/posts/:id',
 		name: 'Edit',
+		meta: {
+			auth: true,
+		},
 		component: () => import('@/views/post/PostEditPage.vue'),
 	},
 	{
@@ -44,6 +54,16 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(process.env.BASE_URL), //# 제거 필수 default 값
 	routes,
+});
+
+router.beforeEach((to, from, next) => {
+	if (to.meta.auth && !store.getters.isLogin) {
+		//인증이 필요하면서 로그인하지 않았을경우
+		console.log('인증이 필요합니다');
+		next('/login');
+		return; //함수 종료
+	}
+	next();
 });
 
 export default router;

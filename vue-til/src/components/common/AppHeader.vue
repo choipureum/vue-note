@@ -1,7 +1,7 @@
 <template>
 	<header :class="{ fixed: isFixed }" ref="appHeader">
 		<div>
-			<router-link to="/" class="logo">
+			<router-link :to="logoLink" class="logo">
 				Note🎨
 				<span v-if="isLoggedIn">by {{ this.$store.state.user.username }}</span>
 			</router-link>
@@ -21,10 +21,15 @@
 </template>
 
 <script>
+import { deleteCookie } from '@/utils/cookies';
+
 export default {
 	computed: {
 		isLoggedIn() {
 			return this.$store.getters.isLogin;
+		},
+		logoLink() {
+			return this.$store.getters.isLogin ? '/main' : '/login';
 		},
 	},
 	data() {
@@ -35,6 +40,9 @@ export default {
 	methods: {
 		logout() {
 			this.$store.commit('clearUser');
+			this.$store.commit('clearToken');
+			deleteCookie('til_auth');
+			deleteCookie('til_user');
 			this.$router.push('/');
 		},
 	},
