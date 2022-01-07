@@ -61,4 +61,20 @@ describe('LoginForm.vue', () => {
 		expect(wrapper.vm.user.username).toBe('test@test.com');
 		expect(wrapper.vm.isUserNameValid).toBe(true);
 	});
+
+	test('ID와 PW가 입력되지 않으면 로그인 버튼이 비활성화 됨.', () => {
+		const wrapper = shallowMount(LoginForm, {
+			data() {
+				return {
+					user: {
+						username: '',
+						password: '',
+					},
+				};
+			},
+		});
+
+		const button = wrapper.find('button');
+		expect(button.element.disabled).toBeTruthy();
+	});
 });
